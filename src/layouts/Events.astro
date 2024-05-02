@@ -1,0 +1,83 @@
+---
+import { getCollection } from "astro:content";
+import Event from "../components/Event.astro";
+
+/* 
+  Limited renders 3 events (for landing page)
+  Full renders 9 events
+*/
+
+interface Props {
+  variant?: "limited" | "full";
+}
+
+const { variant = "full" } = Astro.props;
+
+const events = (await getCollection("events")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+{
+  () => {
+    if (variant === "full") {
+      return (
+        <div class="event-container">
+          <ul>
+            {events?.slice(0, 9).map((event) => (
+              <li>
+                <Event
+                  image={event.data.image}
+                  alt={event.data.alt}
+                  title={event.data.title}
+                  description={event.data.description}
+                  link={event.data.link}
+                  date={event.data.date}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    } else {
+      return (
+        <div class="event-container">
+          <ul>
+            {events?.slice(0, 3).map((event) => (
+              <li>
+                <Event
+                  image={event.data.image}
+                  alt={event.data.alt}
+                  title={event.data.title}
+                  description={event.data.description}
+                  link={event.data.link}
+                  date={event.data.date}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+  }
+}
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  .event-container {
+    ul {
+      display: grid;
+      gap: 3rem;
+      margin-top: 4rem;
+
+      @media (min-width: t.$bp-tablet) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (min-width: t.$bp-desktop) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+</style>

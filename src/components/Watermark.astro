@@ -1,0 +1,34 @@
+---
+import { Image } from "astro:assets";
+import image from "../assets/cross-watermark.png";
+---
+
+<div class="watermark-container">
+  <Image
+    src={image}
+    alt="Image of a cross with brown rope tying it together. Rustic."
+  />
+</div>
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  .watermark-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40rem;
+    height: 40rem;
+    border-radius: 100%;
+    opacity: 0.1;
+    z-index: -1;
+    transform: translate(-25%, 35%);
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+  }
+</style>

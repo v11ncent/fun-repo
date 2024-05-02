@@ -1,0 +1,160 @@
+---
+import { getCollection } from "astro:content";
+import Video from "../components/Video.astro";
+
+const videos = (await getCollection("videos")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<div class="carousel">
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      {
+        videos?.map((video) => (
+          <div class="swiper-slide">
+            <Video
+              image={video.data.image}
+              alt={video.data.alt}
+              title={video.data.title}
+              description={video.data.description}
+              link={video.data.link}
+              date={video.data.date}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <div class="navigation-buttons">
+    <button class="previous-button" aria-label="Click to move the slider back by one video">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"
+        ><path
+          d="M13.869 7.451H1m0 0l6.177-6.193M1 7.451l6.177 6.193"
+          stroke="#5b5b45"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path></svg
+      >
+    </button>
+    <button class="next-button" aria-label="Click to move the slider forward by one video">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"
+        ><path
+          d="M13.869 7.451H1m0 0l6.177-6.193M1 7.451l6.177 6.193"
+          stroke="#5b5b45"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path></svg
+      >
+    </button>
+  </div>
+</div>
+
+<script>
+  import Swiper from "swiper";
+  import { Navigation, Autoplay } from "swiper/modules";
+  import "swiper/css";
+
+  const setCarousel = () => {
+    /*
+      I believe Swiper's script resets the styling every time this function is called
+      So every time the route changes, it resets the styling
+      Hence why we need to explicitly set the styling in the function call
+    */
+    const element = document.querySelector(".swiper") as HTMLElement;
+
+    if (element) {
+      element.style.overflow = "visible";
+    }
+
+    const swiper = new Swiper(".swiper", {
+      modules: [Navigation, Autoplay],
+      loop: true,
+      speed: 800,
+      autoplay: {
+        delay: 3000,
+        pauseOnMouseEnter: true,
+        disableOnInteraction: false,
+      },
+      slidesPerView: 1.1,
+      spaceBetween: "16",
+      breakpoints: {
+        450: {
+          slidesPerView: 1.5,
+          spaceBetween: "16",
+        },
+        700: {
+          slidesPerView: 2.5,
+          spaceBetween: "32",
+        },
+        1000: {
+          slidesPerView: 3,
+          spaceBetween: "48",
+        },
+      },
+
+      navigation: {
+        nextEl: ".next-button",
+        prevEl: ".previous-button",
+      },
+    });
+  };
+
+  setCarousel();
+  document.addEventListener("astro:beforeload", setCarousel);
+</script>
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  .carousel,
+  .swiper {
+    overflow: visible;
+  }
+
+  .carousel {
+    display: flex;
+    flex-direction: column;
+    margin-top: 4rem;
+  }
+
+  .swiper {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .navigation-buttons {
+    margin-top: 2rem;
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.875rem;
+      height: 1.875rem;
+      border: 0.0625rem solid t.$clr-green;
+      border-radius: 100%;
+      background-color: transparent;
+      box-shadow: t.$s-main;
+      transition: t.$t-main;
+      cursor: pointer;
+
+      &:hover {
+        background-color: t.$clr-green;
+      }
+
+      &:hover svg path {
+        transition: t.$t-main;
+        stroke: t.$clr-tan;
+      }
+    }
+
+    .next-button {
+      transform: rotate(180deg);
+    }
+
+    .previous-button {
+      margin-right: 0.25rem;
+    }
+  }
+</style>

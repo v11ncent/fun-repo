@@ -1,0 +1,121 @@
+---
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import NewsBanner from "../components/NewsBanner.astro";
+
+interface Props {
+  variant: "landing" | "inner";
+  heading?: string;
+  description?: string;
+}
+
+const { variant, heading, description } = Astro.props;
+---
+
+{
+  () => {
+    if (variant === "landing") {
+      return (
+        <section id="hero" class="landing">
+          <MaxWidthContainer>
+            <div class="container">
+              <header>
+                <h1>{heading}</h1>
+              </header>
+              <p>{description}</p>
+              <div class="links">
+                <slot />
+              </div>
+            </div>
+          </MaxWidthContainer>
+          <NewsBanner text="Sunday school starts 9:30am & service starts 10:30am at 2500 East Broadway, Sedalia MO." />
+        </section>
+      );
+    } else if (variant === "inner") {
+      return (
+        <section id="hero" class="inner">
+          <MaxWidthContainer>
+            <div class="container">
+              <header>
+                <h1>{heading}</h1>
+              </header>
+            </div>
+          </MaxWidthContainer>
+          <NewsBanner text="Sunday school starts 9:30am & service starts 10:30am at 2500 East Broadway, Sedalia MO." />
+        </section>
+      );
+    }
+  }
+}
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+  $breakpoint: 31.25rem;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    background: center / cover no-repeat url("../assets/hero-mobile.webp");
+
+    @media (min-width: t.$bp-tablet) {
+      background: center / cover no-repeat url("../assets/hero-tablet.webp");
+    }
+
+    @media (min-width: t.$bp-desktop) {
+      background: center / cover no-repeat url("../assets/hero-desktop.webp")
+        fixed;
+    }
+
+    &.landing {
+      min-height: min(90vh, 50rem);
+    }
+
+    &.inner {
+      min-height: min(70vh, 30rem);
+    }
+
+    :global(.max-width) {
+      padding: 3rem t.$pd-inline;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+
+      @media (min-width: $breakpoint) {
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    &.landing header {
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      text-transform: capitalize;
+      font-size: clamp(2.25rem, 1rem + 3vw, 3rem);
+      font-family: t.$ff-yeseva;
+    }
+
+    p {
+      max-width: 60ch;
+      margin-bottom: 3rem;
+      line-height: 1.5;
+      font-size: clamp(1rem, 1.125vw, 1.125rem);
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      width: 100%;
+
+      @media (min-width: $breakpoint) {
+        margin: 0 auto;
+        width: fit-content;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,252 @@
+---
+import ScrollingNewsBanner from "../components/ScrollingNewsBanner.astro";
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import hamburger from "../assets/hamburger.svg";
+import logo from "../assets/logo.svg";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="main-header">
+  <span class="sr-only">Mobile navigation menu</span>
+  <MaxWidthContainer variant="wide">
+    <nav id="main-navigation">
+      <div class="logo-container">
+        <a href="/">
+          <img
+            src={logo.src}
+            alt="Christ Church Sedalia's logo depicting a black outline of a church on a white background."
+            class="logo"
+            width="48"
+            height="48"
+          />
+          <span class="text">Christ Church Sedalia</span>
+        </a>
+      </div>
+      <div class="links-container">
+        <a href="/contact-us" class="mobile-cta-link">Get In Touch</a>
+        <button
+          id="hamburger"
+          aria-controls="main-navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <img
+            src={hamburger.src}
+            alt="Navigation menu icon. Press to open main navigation menu."
+            width="34"
+            height="21"
+          />
+        </button>
+        <ul data-visible="false">
+          <li>
+            <a
+              href="/our-beliefs"
+              class={currentPath.includes("our-beliefs") ? "active" : ""}
+              >Beliefs</a
+            >
+          </li>
+          <li>
+            <a
+              href="/bible-studies"
+              class={currentPath.includes("bible-studies") ? "active" : ""}
+              >Studies</a
+            >
+          </li>
+          <li>
+            <a
+              href="/events"
+              class={currentPath.includes("events") ? "active" : ""}>Events</a
+            >
+          </li>
+          <li>
+            <a
+              href="/donate"
+              class={currentPath.includes("donate") ? "active" : ""}>Donate</a
+            >
+          </li>
+          <li>
+            <a
+              href="/contact-us"
+              class={currentPath.includes("contact-us") ? "active" : ""}
+              >Get In Touch</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </MaxWidthContainer>
+  <ScrollingNewsBanner
+    id="nav-banner"
+    text="Sunday school starts 9:30am & service starts 10:30am at 2500 East Broadway, Sedalia MO."
+  />
+</header>
+
+<script>
+  const setNavbar = () => {
+    const button = document.getElementById("hamburger");
+    const list = document.querySelector("#main-navigation ul");
+    const navBanner = document.getElementById("nav-banner");
+    const regularBanner = document.querySelector(".news-banner");
+
+    if (button && list) {
+      button.addEventListener("click", (event) => {
+        const visibility = list.getAttribute("data-visible");
+
+        if (visibility === "false") {
+          list.setAttribute("data-visible", "true");
+          button.setAttribute("aria-expanded", "true");
+          document.body.style.overflow = "hidden";
+        } else {
+          list.setAttribute("data-visible", "false");
+          button.setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "visible";
+        }
+      });
+    }
+
+    if (navBanner && regularBanner) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            navBanner.style.display = "none";
+          } else {
+            navBanner.style.display = "block";
+          }
+        });
+      });
+
+      observer.observe(regularBanner);
+    }
+  };
+
+  setNavbar();
+  document.addEventListener("astro:beforeload", setNavbar);
+</script>
+
+<style lang="scss">
+  @use "../styles/tokens/_tokens.scss" as t;
+  $breakpoint: 62.5rem;
+  $remove-company-name: 37.5rem;
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #fdfcff;
+    transition: transform 0.5s ease-in-out;
+
+    :global(.max-width) {
+      padding: clamp(0.5rem, 0.5rem + 0.125vw, 0.75rem) 0;
+    }
+
+    :global(#nav-banner) {
+      display: none;
+    }
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+
+    @media (max-width: 87.5rem) {
+      padding: 0 t.$pd-inline; /* Temporary? fix */
+    }
+  }
+
+  button {
+    display: block;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+
+    @media (min-width: $breakpoint) {
+      display: none;
+    }
+  }
+
+  .logo-container a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+
+    .logo {
+      width: 3rem;
+      height: 3rem;
+      border: 0.0625rem solid lightgrey;
+      border-radius: 100%;
+    }
+
+    .text {
+      font-size: 1.25rem;
+      font-family: t.$ff-yeseva;
+      color: t.$clr-black;
+      white-space: nowrap;
+
+      @media (max-width: $remove-company-name) {
+        display: none;
+      }
+    }
+  }
+
+  .links-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .links-container a {
+    font-size: 1.125rem;
+    font-family: t.$ff-poppy;
+    text-decoration: none;
+
+    &.active {
+      color: t.$clr-black;
+    }
+
+    &:not(.active) {
+      color: t.$clr-grey;
+    }
+
+    &:hover,
+    &:focus {
+      color: t.$clr-black;
+    }
+  }
+
+  .links-container .mobile-cta-link {
+    color: t.$clr-black;
+    font-size: 1rem;
+
+    @media (min-width: $breakpoint) {
+      display: none;
+    }
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+
+    @media (max-width: $breakpoint) {
+      position: fixed;
+      z-index: 100;
+      inset: clamp(4rem, 4rem + 0.125vw, 4.375rem) 0 0 0; /* nav height, so fragile */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      font-size: 1.5rem;
+      background-color: #fdfcff;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in;
+
+      &[data-visible="true"] {
+        transform: translateX(0%);
+      }
+    }
+  }
+</style>

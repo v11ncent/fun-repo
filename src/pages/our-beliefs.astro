@@ -1,0 +1,84 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/BaseLayout.astro";
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import Section from "../layouts/Section.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import InnerPageBannerImage from "../components/InnerPageBannerImage.astro";
+import InnerPageLayout from "../layouts/InnerPageLayout.astro";
+import image from "../assets/hero-desktop.webp";
+---
+
+<Layout title="Our Beliefs | Christ Church Sedalia">
+  <InnerPageLayout heroBannerHeading="Our Beliefs & Values" contactFormHeading="Like to know more?">
+    <Section>
+      <MaxWidthContainer>
+        <div class="container">
+          <SectionHeader variant="inner">
+            <h2>What we believe in</h2>
+          </SectionHeader>
+          <p class="space">
+            We're a Reformed Baptist Church in Sedalia, Missouri whose mission is to unashamedly
+            preach, teach, and live the gospel of Jesus Christ to the glory of God. With deep roots
+            in the reformed tradition, our church community passionately embraces our faith, boldly
+            proclaiming the message of salvation through Christ. Our dedication to unashamedly
+            preaching the gospel resonates throughout our worship services, where the Word of God is
+            the central focus. Our dynamic and heartfelt sermons not only educate but also inspire
+            our congregants to live out their faith with conviction.
+          </p>
+          <p class="space">
+            We fully subscribe to the London Baptist Confession of Faith of 1689, as the most
+            accurate expression of that system of doctrine taught in the Bible. We do not hold this
+            Confession of Faith to be above or equal to the Holy Scriptures. Rather we accept it as
+            an assistance in controversy, a confirmation in faith, and an instrument of edification
+            and instruction. This Confession provides every member with a compact systematic
+            theology, and by means of the scriptural proofs, each one can be ready to give a reason
+            for the hope that is in him.
+          </p>
+          <p>
+            You can read more about the London Baptist Confession
+            <a
+              href="https://www.reformedreader.org/ccc/1689lbc/english/1689econtents.htm"
+              target="_blank"
+              rel="noopener"
+              >at reformedreader.org
+            </a>
+          </p>
+        </div>
+        <InnerPageBannerImage>
+          <Image src={image} alt="" class="image" />
+        </InnerPageBannerImage>
+      </MaxWidthContainer>
+    </Section>
+    <Section>
+      <MaxWidthContainer>
+        <div class="container">
+          <SectionHeader variant="inner">
+            <h2>How we accomplish it</h2>
+          </SectionHeader>
+          <p class="space">
+            We regularly have sermons, bible studies, and volunteer events to live and spread the
+            gospel of Jesus Christ. You can see all of <a href="/events"
+              >our past and present events here</a
+            >.
+          </p>
+        </div>
+      </MaxWidthContainer>
+    </Section>
+  </InnerPageLayout>
+</Layout>
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  /* Would be better to make separate variants, but quick solution and
+    site isn't that big */
+
+  :global(section:nth-of-type(2)) {
+    padding-bottom: 0;
+  }
+
+  :global(p) {
+    color: t.$clr-grey;
+  }
+</style>

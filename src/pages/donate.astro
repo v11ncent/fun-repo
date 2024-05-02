@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/BaseLayout.astro";
+import InnerPageLayout from "../layouts/InnerPageLayout.astro";
+---
+
+<Layout title="Donate To Our Cause | Christ Church Sedalia">
+  <InnerPageLayout
+    heroBannerHeading="Donate to our cause"
+    contactFormHeading="Get in touch to donate"
+    contactFormDescription={"Your donation helps us keep our church running and spreading the gospel of Jesus Christ. Every donation, no matter how small, is greatly appreciated."}
+  />
+</Layout>
+
+<style lang="scss">
+  :global(.section-header) {
+    margin-inline: auto;
+  }
+
+  p {
+    text-align: center;
+  }
+</style>

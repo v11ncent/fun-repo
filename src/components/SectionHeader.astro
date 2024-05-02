@@ -1,0 +1,81 @@
+---
+interface Props {
+  variant?: "inverted" | "no-decoration" | "decoration" | "inner";
+  classes?: string;
+}
+
+const { variant = "decoration", classes } = Astro.props;
+---
+
+{
+  () => {
+    if (variant === "inverted") {
+      return (
+        <header class=`section-header inverted ${classes}`>
+          <slot />
+        </header>
+      );
+    } else if (variant === "no-decoration") {
+      return (
+        <header class=`section-header no-decoration ${classes}`>
+          <slot />
+        </header>
+      );
+    } else if (variant === "inner") {
+      return (
+        <header class=`section-header decoration inner ${classes}`>
+          <slot />
+        </header>
+      );
+    } else {
+      return (
+        <header class=`section-header decoration ${classes}`>
+          <slot />
+        </header>
+      );
+    }
+  }
+}
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  header {
+    position: relative;
+    z-index: 2;
+    max-width: fit-content;
+    margin-bottom: 1.5rem;
+    font-size: t.$fs-heading;
+    font-family: t.$ff-heading;
+    text-transform: capitalize;
+    color: t.$clr-black;
+
+    &.decoration::after,
+    &.inverted::after {
+      position: absolute;
+      content: "";
+      top: 50%;
+      right: 0;
+      z-index: -1;
+      width: 3rem;
+      height: 3rem;
+      transform: translate(75%, -50%);
+      border-radius: 100%;
+    }
+
+    &.decoration::after {
+      background: center / 40% no-repeat url("../assets/cross-decoration.svg")
+        t.$clr-tan;
+    }
+
+    &.inverted::after {
+      background: center / 40% no-repeat
+        url("../assets/cross-decoration-inverted.svg") white;
+    }
+  }
+
+  .inner {
+    font-size: clamp(1.75rem, 1.75vw, 2rem);
+    margin-bottom: 1rem;
+  }
+</style>

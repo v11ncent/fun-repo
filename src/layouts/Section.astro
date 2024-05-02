@@ -1,0 +1,71 @@
+---
+interface Props {
+  variant?: "landing" | "paper" | "generic";
+  id?: string;
+}
+const { variant = "generic", id } = Astro.props;
+---
+
+{
+  () => {
+    if (variant === "landing") {
+      return (
+        <section id={id} class="landing">
+          <slot />
+        </section>
+      );
+    } else if (variant === "paper") {
+      return (
+        <section id={id} class="paper">
+          <slot />
+        </section>
+      );
+    } else {
+      return (
+        <section id={id} class="generic">
+          <slot />
+        </section>
+      );
+    }
+  }
+}
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  .landing,
+  .paper {
+    padding: t.$pd-section;
+  }
+
+  .generic {
+    padding: t.$pd-section-generic;
+  }
+
+  .paper {
+    position: relative;
+    padding: t.$pd-section;
+    background: center / cover url("../assets/paper-background.webp") t.$clr-tan;
+    box-shadow: t.$s-main;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: "";
+      left: 0;
+      width: 100%;
+      height: 2rem;
+      background: center / cover no-repeat url("../assets/paper.webp");
+    }
+
+    &::before {
+      top: 0;
+      transform: translate(0, -95%);
+    }
+
+    &::after {
+      bottom: 0;
+      transform: translate(0, 95%) rotate(180deg);
+    }
+  }
+</style>

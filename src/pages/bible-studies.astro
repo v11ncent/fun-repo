@@ -1,0 +1,115 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/BaseLayout.astro";
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import Section from "../layouts/Section.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import InnerPageLayout from "../layouts/InnerPageLayout.astro";
+import InnerPageBannerImage from "../components/InnerPageBannerImage.astro";
+import image from "../assets/hero-desktop.webp";
+---
+
+<Layout title="Bible Studies | Christ Church Sedalia">
+  <InnerPageLayout heroBannerHeading="Our Bible Studies" contactFormHeading="Join our bible study">
+    <Section>
+      <MaxWidthContainer>
+        <div class="container">
+          <SectionHeader variant="inner">
+            <h2>Our Bible Studies</h2>
+          </SectionHeader>
+          <p class="space">
+            We seek to glorify God by studying His Most Holy Word. All of our Sunday School classes
+            and adult studies focus on learning the blessed doctrines in the Scriptures for the
+            purpose of knowing our God better that we might walk worthily as we grow in holiness.
+          </p>
+          <p class="space">
+            We believe that the Bible alone is our true spiritual authority and any other books,
+            confessions, catechisms, etc. used are only of value inasmuch as they are in harmony
+            with the Bible.
+          </p>
+          <p>
+            We teach classic Reformed Scriptural truths like the Five Solas, the Doctrines of Grace,
+            Covenant Theology, the Fourfold State of Man, sanctification, and any other doctrine
+            contained in the Word. We use expository teaching, topical studies, catechisms, and
+            historic confessions to teach God’s Word to the sheep Jesus died to save.
+          </p>
+        </div>
+      </MaxWidthContainer>
+    </Section>
+    <Section>
+      <MaxWidthContainer>
+        <div class="container">
+          <SectionHeader variant="inner">
+            <h2>1. Children's Study School</h2>
+          </SectionHeader>
+          <p>
+            Our children are also taught using the New City Catechism at an age-appropriate pace and
+            depth in order to become familiar with the Holy Bible and it’s teachings at a young age
+          </p>
+        </div>
+      </MaxWidthContainer>
+      <InnerPageBannerImage>
+        <Image src={image} alt="" class="image" />
+      </InnerPageBannerImage>
+    </Section>
+    <Section>
+      <MaxWidthContainer>
+        <div class="container">
+          <SectionHeader variant="inner">
+            <h2>2. Youth Sunday School</h2>
+          </SectionHeader>
+          <p>
+            Youth are taught the same as adults, using the Word of God to learn doctrine and
+            holiness in order to glorify God in their lives. They are currently using the New City
+            Catechism to commit these teachings to memory. They also study each doctrine taught, as
+            this is not a rote memory exercise, but a means of hiding the truth of God’s Word in
+            their hearts.
+          </p>
+        </div>
+      </MaxWidthContainer>
+      <InnerPageBannerImage>
+        <Image src={image} alt="" class="image" />
+      </InnerPageBannerImage>
+    </Section>
+    <Section>
+      <MaxWidthContainer>
+        <div class="container">
+          <SectionHeader variant="inner">
+            <h2>3. Adult Sunday School & Studies</h2>
+          </SectionHeader>
+          <p class="space">
+            Our adult Sunday School class is currently learning Biblical doctrine through a detailed
+            study of our confession of faith, the Second London Baptist Confession of Faith of 1689,
+            lovingly known as “the 1689”.
+          </p>
+          <p class="space">
+            The Men’s Study currently meets Friday mornings and is currently working through an
+            expository series on Proverbs.
+          </p>
+          <p>
+            The Women’s Study meets on Wednesday mornings and has completed a variety of studies.
+            Most recently, the completed an expository study on the Parable of the Prodigal Son.
+          </p>
+        </div>
+      </MaxWidthContainer>
+      <InnerPageBannerImage>
+        <Image src={image} alt="" class="image" />
+      </InnerPageBannerImage>
+    </Section>
+  </InnerPageLayout>
+</Layout>
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  /* Would be better to make separate variants, but quick solution and
+    site isn't that big */
+
+  :global(section:nth-of-type(2), section:nth-of-type(3), section:nth-of-type(4)) {
+    padding-bottom: 0;
+  }
+
+  :global(p) {
+    color: t.$clr-grey;
+  }
+</style>

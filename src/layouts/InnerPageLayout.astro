@@ -1,0 +1,61 @@
+---
+import NavigationBar from "./NavigationBar.astro";
+import Section from "./Section.astro";
+import Footer from "./Footer.astro";
+import HeroBanner from "./HeroBanner.astro";
+import Watermark from "../components/Watermark.astro";
+import ContactForm from "./ContactForm.astro";
+
+interface Props {
+  heroBannerHeading: string;
+  contactFormHeading: string;
+  contactFormDescription?: string;
+}
+
+const { heroBannerHeading, contactFormHeading, contactFormDescription } =
+  Astro.props;
+---
+
+<>
+  <NavigationBar />
+  <main>
+    <HeroBanner variant="inner" heading={heroBannerHeading} />
+    <slot />
+    <Section id="contact">
+      <ContactForm
+        heading={contactFormHeading}
+        description={contactFormDescription}
+      />
+    </Section>
+    <Watermark />
+  </main>
+  <Footer />
+</>
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  main,
+  footer {
+    /* For watermark component */
+    position: relative;
+    overflow: hidden;
+
+    :global(.max-width) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    :global(.space) {
+      margin-bottom: 0.5rem;
+    }
+
+    :global(.container) {
+      margin: 0 auto;
+    }
+
+    :global(.no-padding-bottom) {
+      padding-bottom: 0;
+    }
+  }
+</style>

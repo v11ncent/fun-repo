@@ -1,0 +1,6 @@
+$inline: clamp(1rem, 3vw, 5rem);
+$block: clamp(6rem, 2rem + 10vw, 10rem);
+$block-generic: clamp(4rem, 4.5vw, 5rem);
+
+$section: $block $inline;
+$section-generic: $block-generic $inline;

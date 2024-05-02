@@ -1,0 +1,157 @@
+---
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import logo from "../assets/logo.svg";
+---
+
+<footer>
+  <MaxWidthContainer variant="wide">
+    <div class="container">
+      <div class="intro">
+        <header class="intro-header">
+          <img
+            src={logo.src}
+            alt="Christ Church Sedalia's logo depicting a black outline of a church on a white background."
+            width="48"
+            height="48"
+          />
+          <h2 class="intro-heading">Christ Church Sedalia</h2>
+        </header>
+        <p>
+          We're a church located in Sedalia, Missouri. Our mission is to
+          unashamedly preach, teach, and live the gospel of Jesus Christ to the
+          glory of God.
+        </p>
+        <p>
+          Site designed, developed, and optimized by <a
+            href="https://www.vincewebdesigns.com/?ref=christchurchsedalia"
+            target="_blank"
+            rel="noopener">Vince Web Designs</a
+          >.
+        </p>
+      </div>
+      <nav>
+        <header>
+          <h3 class="nav-heading">Socials</h3>
+        </header>
+        <ul>
+          <li>
+            <a
+              href="https://www.facebook.com/people/Christ-Church-Sedalia/100091224970790/"
+              target="_blank"
+              rel="noopener">Facebook</a
+            >
+          </li>
+          <li><a href="/">YouTube</a></li>
+          <li><a href="/">Instagram</a></li>
+        </ul>
+      </nav>
+    </div>
+  </MaxWidthContainer>
+</footer>
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  footer {
+    position: relative;
+    padding: clamp(2rem, 3vw, 4rem) t.$pd-inline;
+    background: center / cover url("../assets/paper-background.webp") t.$clr-tan;
+    box-shadow: t.$s-main;
+
+    &::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      max-height: 2rem;
+      z-index: 10;
+      transform: translate(0, -95%);
+      background: center / cover no-repeat url("../assets/paper.webp");
+    }
+  }
+
+  .container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .intro {
+    max-width: 32rem;
+
+    .intro-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+
+      img {
+        margin-right: 0.75rem;
+      }
+
+      .intro-heading {
+        font-size: 1.25rem;
+        font-weight: 400;
+        font-family: t.$ff-yeseva;
+        color: t.$clr-black;
+      }
+    }
+
+    p {
+      color: t.$clr-grey;
+      font-size: 1rem;
+    }
+
+    p:last-child {
+      margin-top: 0.5rem;
+    }
+  }
+
+  nav header {
+    margin-bottom: 1.125rem;
+
+    .nav-heading {
+      position: relative;
+      font-weight: 400;
+      font-family: t.$ff-yeseva;
+      color: t.$clr-black;
+      z-index: 1;
+      max-width: fit-content;
+
+      &::after {
+        position: absolute;
+        content: "";
+        width: 120%;
+        height: 80%;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        transform: translate(-15%, 20%);
+        border-radius: t.$br-main;
+        background-color: t.$clr-dark-tan;
+      }
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  li {
+    font-family: t.$ff-poppy;
+    color: t.$clr-grey;
+    font-size: 1rem;
+
+    a {
+      text-decoration: none;
+      color: t.$clr-grey;
+    }
+  }
+</style>

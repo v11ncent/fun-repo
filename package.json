@@ -1,0 +1,26 @@
+{
+  "name": "christ-church-sedalia",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npx tinacms dev -c \"astro dev\"",
+    "start": "astro dev",
+    "build": "tinacms build && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/partytown": "^1.2.3",
+    "@astrojs/sitemap": "^2.0.1",
+    "@cloudinary/url-gen": "^1.11.1",
+    "@tinacms/cli": "^1.5.27",
+    "astro": "^2.10.9",
+    "mapbox-gl": "^2.15.0",
+    "swiper": "^10.1.0",
+    "tinacms": "^1.5.18"
+  },
+  "devDependencies": {
+    "@types/mapbox-gl": "^2.7.12",
+    "sass": "^1.64.1"
+  }
+}

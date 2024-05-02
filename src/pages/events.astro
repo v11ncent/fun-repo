@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/BaseLayout.astro";
+import InnerPageLayout from "../layouts/InnerPageLayout.astro";
+import Section from "../layouts/Section.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import EventsComponent from "../layouts/Events.astro"; // renamed because naming conflict
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+---
+
+<Layout title="Events | Christ Church Sedalia">
+  <InnerPageLayout
+    heroBannerHeading="Upcoming & past events"
+    contactFormHeading="Interested in any events?"
+  >
+    <Section>
+      <MaxWidthContainer variant="wide">
+        <SectionHeader variant="decoration" classes="center">
+          <h2>Upcoming & past events</h2>
+        </SectionHeader>
+        <EventsComponent variant="full" />
+      </MaxWidthContainer>
+    </Section>
+  </InnerPageLayout>
+</Layout>
+
+<style lang="scss">
+  p {
+    text-align: center;
+  }
+</style>

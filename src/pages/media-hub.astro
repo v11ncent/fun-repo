@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/BaseLayout.astro";
+import InnerPageLayout from "../layouts/InnerPageLayout.astro";
+import Section from "../layouts/Section.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import VideoGrid from "../layouts/VideoGrid.astro";
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+---
+
+<Layout title="Media Hub | Christ Church Sedalia">
+  <InnerPageLayout heroBannerHeading="Media Hub" contactFormHeading="Looking for a video?">
+    <Section>
+      <MaxWidthContainer variant="wide">
+        <SectionHeader variant="no-decoration" classes="center">
+          <h2>Our Media</h2>
+        </SectionHeader>
+        <VideoGrid />
+      </MaxWidthContainer>
+    </Section>
+  </InnerPageLayout>
+</Layout>
+
+<style lang="scss">
+  p {
+    text-align: center;
+  }
+</style>

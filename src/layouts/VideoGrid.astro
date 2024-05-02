@@ -1,0 +1,78 @@
+---
+import { getCollection } from "astro:content";
+import Video from "../components/Video.astro";
+
+/* 
+  Limited renders 3 videos (for landing page)
+  Full renders 9 videos
+*/
+
+interface Props {
+  variant?: "limited" | "full";
+}
+
+const { variant = "full" } = Astro.props;
+
+const videos = (await getCollection("videos")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+{
+  () => {
+    if (variant === "full") {
+      return (
+        <div class="video-container">
+          <ul>
+            {videos?.slice(0, 9).map((video) => (
+              <Video
+                image={video.data.image}
+                alt={video.data.alt}
+                title={video.data.title}
+                description={video.data.description}
+                link={video.data.link}
+                date={video.data.date}
+              />
+            ))}
+          </ul>
+        </div>
+      );
+    } else {
+      return (
+        <div class="video-container">
+          <ul>
+            {videos?.slice(0, 3).map((video) => (
+              <Video
+                image={video.data.image}
+                title={video.data.title}
+                description={video.data.description}
+                link={video.data.link}
+                date={video.data.date}
+              />
+            ))}
+          </ul>
+        </div>
+      );
+    }
+  }
+}
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  .video-container {
+    ul {
+      display: grid;
+      gap: 3rem;
+      margin-top: 4rem;
+
+      @media (min-width: t.$bp-tablet) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (min-width: t.$bp-desktop) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+</style>

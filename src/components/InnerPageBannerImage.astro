@@ -1,0 +1,54 @@
+---
+import MaxWidthContainer from "./MaxWidthContainer.astro";
+---
+
+<div class="banner-image">
+  <MaxWidthContainer>
+    <div class="inner">
+      <slot />
+    </div>
+  </MaxWidthContainer>
+</div>
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  .banner-image {
+    width: t.$w-inner-page-popouts;
+    margin: 2.5rem auto 0 auto;
+
+    .inner {
+      position: relative;
+      width: t.$w-inner-page-popouts;
+      box-shadow: 2px 1px 11px 0px rgba(0, 0, 0, 0.15);
+      border-radius: 0.625rem;
+
+      &::before,
+      &::after {
+        position: absolute;
+        width: clamp(2rem, 3vw, 3rem);
+        height: clamp(2rem, 3vw, 3rem);
+        content: "";
+        background: center / cover no-repeat url("../assets/frame.png");
+      }
+
+      &::before {
+        top: 0;
+        left: 0;
+        transform: translate(-25%, -25%);
+      }
+
+      &::after {
+        bottom: 0;
+        right: 0;
+        transform: translate(25%, 25%) rotate(180deg);
+      }
+    }
+
+    :global(img) {
+      border-radius: inherit;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+</style>

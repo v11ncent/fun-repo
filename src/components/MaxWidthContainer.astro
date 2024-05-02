@@ -1,0 +1,41 @@
+---
+interface Props {
+  variant?: "wide" | "narrow";
+}
+
+const { variant = "narrow" } = Astro.props;
+---
+
+{
+  (() => {
+    if (variant === "wide") {
+      return (
+        <div class="max-width wide">
+          <slot />
+        </div>
+      );
+    } else {
+      return (
+        <div class="max-width narrow">
+          <slot />
+        </div>
+      );
+    }
+  })()
+}
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  .max-width {
+    margin: auto;
+
+    &.wide {
+      width: t.$w-max-width-components--wide;
+    }
+
+    &.narrow {
+      width: t.$w-max-width-components--narrow;
+    }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+interface Props {
+  id?: string;
+  text: string;
+}
+
+const { id = "", text } = Astro.props;
+---
+
+<div id={id} class="scrolling-banner">
+  <div class="container">
+    <p class="center">{text}</p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../styles/tokens/tokens" as t;
+
+  .container {
+    position: fixed;
+    top: clamp(64px, 64px + 0.125vw, 4.375rem); /* Navbar height */
+    left: 0;
+    right: 0;
+    padding: 0.5rem;
+    font-size: clamp(0.625rem, 0.625rem + 0.5vw, 1rem);
+    text-align: center;
+    background-color: t.$clr-tan;
+    border-top: 0.0625rem solid t.$clr-golden-tan;
+    border-bottom: 0.0625rem solid t.$clr-golden-tan;
+
+    p {
+      max-width: 100%;
+      color: black; /* Specificity */
+    }
+  }
+</style>
